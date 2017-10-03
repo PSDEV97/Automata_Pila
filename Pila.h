@@ -1,64 +1,64 @@
 using namespace std;
 
-class Pila{
+class Stack{
 	
 	private:
 		
-		List *tope;
+		List *top;
 	public:
 		
-		Pila(){
-			tope=NULL;
+		Stack(){// constructor de la clase pila
+			top=NULL;
 		}
 		
-		bool pilaVacia(){
-			return tope == NULL;
+		bool emptyStack(){// funcion para determinar si la pila esta vacia
+			return top == NULL;
 		}
 		
-		void insert(dato d){
-			List *nodo = new List();
-			nodo->Dato = d;
-			nodo->siguiente = tope;
-			tope = nodo;
+		void insertDataStack(DATA data){//insertar un nodo a la pila
+			List *auxiliaryNode = new List();
+			auxiliaryNode-> data = data;
+			auxiliaryNode-> following = top;
+			top = auxiliaryNode;
 		}
 		
-		dato remove(){//saca un dato de la pila
-			List *nodoAuxiliar;
-			dato auxiliar;
-			if (!pilaVacia()){
-				nodoAuxiliar = tope;
-				tope = tope->siguiente;
-				auxiliar = nodoAuxiliar->Dato;
-				delete (nodoAuxiliar);
-				return auxiliar;
+		DATA removeDataStack(){//sacar un dato de la pila
+			List *auxiliaryNode;
+			DATA auxiliary;
+			if (!emptyStack()){
+				auxiliaryNode = top;
+				top = top -> following;
+				auxiliary = auxiliaryNode -> data;
+				delete (auxiliaryNode);
+				return auxiliary;
 			}else{
 				cout << "underflow";
 			}
 		}
 		
-		int stackSize(){//indica el tamaño de la pila
-			int tamanoPila = 0;
-			List *p = tope;
-			while(p != NULL){
-				tamanoPila++;
-				p = p -> siguiente;
+		int stackSize(){//indica el tamaÃ±o de la pila
+			int stackSize = 0;
+			List *auxiliary = top;
+			while(auxiliary != NULL){
+				stackSize++;
+				auxiliary = auxiliary -> following;
 			}
-			return tamanoPila;
+			return stackSize;
 		}
 		void empty(){// vacia la pila
-			List *p = tope;
-			while(tope != NULL){
-				p = tope;
-				tope = tope -> siguiente;
-				delete (p);
+			List *auxiliary = top;
+			while(top != NULL){
+				auxiliary = top;
+				top = top -> following;
+				delete (auxiliary);
 			}
 		}
 		
-		void imprimir(){
-			List *p = tope;
-			while(p != NULL){
-				cout << "[" << p->Dato << "]" <<endl;
-				p = p->siguiente;
+		void print(){
+			List *auxiliary = top;
+			while(auxiliary != NULL){
+				cout << "[" << auxiliary -> data << "]" <<endl;
+				auxiliary = auxiliary -> following;
 			}
 		}
 };
