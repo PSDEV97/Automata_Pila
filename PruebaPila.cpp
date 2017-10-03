@@ -4,20 +4,16 @@
 using namespace std;
 
 main (){
-	Stack p; 
+	Stack pila; 
 	DATA data;
 	
 	cout << "Ingresar Valor a La Pila:" << endl;
 	
-	for(int i=0; i<3; i++){
+	for(int i = 0; i < 3; i++){
     		cin >> data;
-		p.insertDataStack(data);
+		pila.insertDataStack(data);
 	}
 	
 	cout << endl;
-	p.print();	
+	pila.print();	
 }
-
-
-
-
