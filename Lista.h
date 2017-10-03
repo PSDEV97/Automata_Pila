@@ -1,12 +1,12 @@
-typedef char dato;
+typedef char DATA;
 
 class List {
 	
 	public:
-		dato Dato;
-		List *siguiente;
+		DATA data;
+		List *following;
 		
 		List(){
-			siguiente = NULL;
+			following = NULL;
 		}
 };
