@@ -2,7 +2,7 @@
 class MatrixGraph{
 	protected:
 		int maximumVertex;
-		int numberVertices; //numberVertices
+		int numberVertices; 
 		Vertex *vertex;
 		int **adjacencyMatrix;
 	public:
@@ -32,158 +32,171 @@ class MatrixGraph{
 			this->numberVertices = numberVertices;
 		}
 	
-		void newVertex(string vertexName){
-			bool esta = numVertices(vertexName) >= 0;
+		char newVertex(string vertexName){
+			bool esta = vertexSearch(vertexName) >= 0;
 			if(!esta){
 				Vertex auxiliary = Vertex(vertexName, numberVertices);
 				vertex[numberVertices++] = auxiliary;
+				return '0';
 			}else{
-				cout << "No se puede insertar. Ya esta!" << endl;
+				return '1';//cout << "No se puede insertar. Ya esta!" << endl;
 			}
 		}
 	
-		int numVertices(string vertexName){
-			int i;
-			bool encontrado = false;
-			for( i = 0; (i < numberVertices) && !encontrado;){
-				encontrado = vertex[i].sameName(vertexName);
-				if(!encontrado){
-					i++;
+		int vertexSearch(string vertexName){ 
+			int vertexPosition;
+			bool found = false;
+			for( vertexPosition = 0; (vertexPosition < numberVertices) && !found;){
+				found = vertex[vertexPosition].sameName(vertexName);
+				if(!found){
+					vertexPosition++;
 				}
 			}
-			if(i < numberVertices){
-				return i;
+			if(vertexPosition < numberVertices){
+				return vertexPosition;
 			}else{
 				return -1;
 			}
 		}
-		void newBow(string vertexNameA, string vertexNameB){
-			int va, vb;
-			va = numVertices(vertexNameA);
-			vb = numVertices(vertexNameB);
-			if(va < 0 || vb < 0){
-				cout << "Vertice no existe" << endl;
+		char newBow(string vertexNameA, string vertexNameB){
+			int vertexPositionA, vertexPositionB; //vertexPosition
+			vertexPositionA = vertexSearch(vertexNameA);
+			vertexPositionB = vertexSearch(vertexNameB);
+			if(vertexPositionA < 0 || vertexPositionB < 0){
+				return '2';// cout << "Vertice no existe" << endl;
 			}else{
-				adjacencyMatrix[va][vb] = 1;
+				adjacencyMatrix[vertexPositionA][vertexPositionB] = 1;
+				return '0';
 			}
 		}
-		void newBow(string vertexNameA, string vertexNameB,int valor){
-			int va, vb;
-			va = numVertices(vertexNameA);
-			vb = numVertices(vertexNameB);
-			if(va < 0 || vb < 0){
-				cout << "Vertice no existe" << endl;
+		char newBow(string vertexNameA, string vertexNameB,int arcValue){
+			int vertexPositionA, vertexPositionB; //vertexPosition
+			vertexPositionA = vertexSearch(vertexNameA);
+			vertexPositionB = vertexSearch(vertexNameB);
+			
+			if(vertexPositionA < 0 || vertexPositionB < 0){
+				return '2';// cout << "Vertice no existe" << endl;
 			}else{
-				adjacencyMatrix[va][vb] = valor;
+				adjacencyMatrix[vertexPositionA][vertexPositionB] = arcValue;
+				return '0';
 			}
 		}
-		void newBow(int va, int vb){
-			if(va < 0 || vb < 0 || va > numberVertices || vb > numberVertices){
-				cout << "Vertice no existe" << endl;
+		char newBow(int vertexPositionA, int vertexPositionB){
+			if(vertexPositionA < 0 || vertexPositionB < 0 || vertexPositionA > numberVertices || vertexPositionB > numberVertices){
+				return '2'; //cout << "Vertice no existe" << endl;
 			}else{
-				adjacencyMatrix[va][vb] = 1;
+				adjacencyMatrix[vertexPositionA][vertexPositionB] = 1;
+				return '0';
 			}
 		}
-		void newBow(int va, int vb, int valor){
-			if(va < 0 || vb < 0 || va > numberVertices || vb > numberVertices){
-				cout << "Vertice no existe" << endl;
+	
+		char newBow(int vertexPositionA, int vertexPositionB, int arcValue){
+			if(vertexPositionA < 0 || vertexPositionB < 0 || vertexPositionA > numberVertices || vertexPositionB > numberVertices){
+				return '2'; //cout << "Vertice no existe" << endl;
 			}else{
-				adjacencyMatrix[va][vb] = valor;
+				adjacencyMatrix[vertexPositionA][vertexPositionB] = arcValue;
+				return '0';
 			}
 		}
-		bool adyacentes(string a, string b){ //adjacentVertices
-			int va = numVertices(a);
-			int vb = numVertices(b);
-			if(va < 0 || vb < 0){
-				cout << "Vertice no existe" << endl;
+	
+		bool adjacentVertices(string vertexNameA, string vertexNameB){ //adjacentVertices
+			int vertexPositionA = numVertices(vertexNameA);
+			int vertexPositionB = numVertices(vertexNameB);
+			if(vertexPositionA < 0 || vertexPositionB < 0){
+				//cout << "Vertice no existe" << endl;
 				return false;
 			}else{
-				return adjacencyMatrix[va][vb] >= 1;
+				return adjacencyMatrix[vertexPositionA][vertexPositionB] >= 1;
 			}
 		}
-		bool adyacentes(int a, int b){ //adjacentVertices
-			if(a < 0 || b < 0 || a > numberVertices || b > numberVertices){//a<b
-				cout << "Vertice no existe" << endl;
+		bool adjacentVertices(int vertexPositionA, int vertexPositionB){ //adjacentVertices
+			if(vertexPositionA < 0 || vertexPositionB < 0 || vertexPositionA > numberVertices || vertexPositionB > numberVertices){//a<b
+				//cout << "Vertice no existe" << endl;
 				return false;
 			}else{
-				return adjacencyMatrix[a][b] >= 1;
+				return adjacencyMatrix[vertexPositionA][vertexPositionB] >= 1;
 			}
 		}
-		int getValor(int a, int b){
-			if(a < 0 || b < 0 || a > numberVertices || b > numberVertices){
-				cout << "Vertice no existe" << endl;
+		int getValue(int vertexPositionA, int vertexPositionB){
+			if(vertexPositionA < 0 || vertexPositionB < 0 || vertexPositionA > numberVertices || vertexPositionB > numberVertices){
+				//cout << "Vertice no existe" << endl;
 				return -1;
 			}else{
-				return adjacencyMatrix[a][b]; //>=1
+				return adjacencyMatrix[vertexPositionA][vertexPositionB]; //>=1
 			}
 		}
-		int getValor(string a, string b){
-				int va, vb;
-				va = numVertices(a);
-				vb = numVertices(b);
-				if (va < 0 || vb < 0)	{
-					cout << "vertice no existe";
+		int getValue(string vertexNameA, string vertexNameB){
+				int vertexPositionA, vertexPositionB;
+				vertexPositionA = numVertices(vertexNameA);
+				vertexPositionB = numVertices(vertexNameB);
+				if (vertexPositionA < 0 || vertexPositionB < 0)	{
+					// cout << "vertice no existe";
 					return -1;
 				}else{
-					return adjacencyMatrix[va][vb];
+					return adjacencyMatrix[vertexPositionA][vertexPositionB];
 				}
 		}
-		void setValor(int a, int b, int v){
-			if(a < 0 || b < 0 || a > numberVertices || b > numberVertices){
-				cout << "vertice no existe..";
+		 char setValue(int vertexPositionA, int vertexPositionB, int arcValue){
+			if(vertexPositionA < 0 || vertexPositionB < 0 || vertexPositionA > numberVertices || vertexPositionB > numberVertices){
+				//cout << "vertice no existe..";
+				return '2';
 			}else{
-				adjacencyMatrix[a][b] = v;
+				adjacencyMatrix[vertexPositionA][vertexPositionB] = arcValue;
+				return '0';
 			}
 		}
 
-		void setValor(string a, string b, int v){
-			int va, vb;
-			va = numVertices(a);
-			vb = numVertices(b);
-			if(va < 0 || vb < 0){
-				cout << "vertice no existe..";
+		char setValor(string vertexNameA, string vertexNameB, int arcValue){
+			int vertexPositionA, vertexPositionB;
+			vertexPositionA = numVertices(a);
+			vertexPositionB = numVertices(b);
+			if(vertexPositionA < 0 || vertexPositionB < 0){
+				return '2';//cout << "vertice no existe..";
 			}else{
-				adjacencyMatrix[va][vb] = v;
+				adjacencyMatrix[vertexPositionA][vertexPositionB] = arcValue;
+				return '0';
 			}
 		}
-		Vertex getVertice(int n){
-		if(n < 0 || n >= numberVertices){
-			cout << "Vertice no existe..";
-		}else{
-			return vertex[n];
-		}
-	}
-
-	void setVertice(int n, Vertex v){
-			if( n < 0 || n >= numberVertices){
-			cout << "Vertice no existe..";
-		}else{
-			 vertex[n] = v;
-		}
-	}
-	void impVerts(){
-		cout << "V:{";
-		for(int i = 0; i < numberVertices; i++){
-			cout << "[" << vertex[i].getName() << "]";
-		}
-		cout << "}" << endl;
-	}
-
-	void printAdjacencyMatrix(){
-		cout << "adjacencyMatrix:" << endl;
-		for(int i = 0; i < numberVertices ; i++){
-			for(int j = 0; j < numberVertices; j++){
-				cout << "[";
-				if(adjacencyMatrix[i][j] == 0)
-					cout << setfill(' ') << setw(3) << (" ");
-				else
-					cout << setfill(' ') << setw(3) << adjacencyMatrix[i][j];
-				cout<<"]";
+		Vertex getVertex(int vertexPosition){
+			if(vertexPosition < 0 || vertexPosition >= numberVertices){
+				//return '2'; //cout << "Vertice no existe..";
+			}else{
+				return vertex[vertexPosition];
+				//return '0';
 			}
-			cout << endl;
 		}
-	}
-	void printFormalAdjacencyMatrix(){
+
+		char setVertex(int vertexPosition, Vertex vertex){
+			if( vertexPosition < 0 || vertexPosition >= numberVertices){
+				return '2';//cout << "Vertice no existe..";
+			}else{
+				vertex[vertexPosition] = vertex;
+				return '0';
+			}
+		}
+		void impVerts(){
+			cout << "V:{";
+			for(int i = 0; i < numberVertices; i++){
+				cout << "[" << vertex[i].getName() << "]";
+			}
+			cout << "}" << endl;
+		}
+
+		void printAdjacencyMatrix(){
+			cout << "adjacencyMatrix:" << endl;
+			for(int i = 0; i < numberVertices ; i++){
+				for(int j = 0; j < numberVertices; j++){
+					cout << "[";
+					if(adjacencyMatrix[i][j] == 0)
+						cout << setfill(' ') << setw(3) << (" ");
+					else
+						cout << setfill(' ') << setw(3) << adjacencyMatrix[i][j];
+					cout<<"]";
+				}
+				cout << endl;
+			}
+		}
+		void printFormalAdjacencyMatrix(){
 			cout << "adjacencyMatrix:{";
 			for(int i = 0; i < numberVertices; i++){
 				for(int j = 0; j < numberVertices; j++){
@@ -195,7 +208,7 @@ class MatrixGraph{
 			}
 			cout << "}" << endl;
 		}
-	void impGrados(){
+		void impGrados(){
 			int ce,cs;
 			for(int i = 0; i < numberVertices; i++){
 				cs = 0;
